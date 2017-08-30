@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>CC client dev-test</title>
+    <style>
+
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(document).ready(function(){
+          var socket = io();
+          $(".test").on( "click", function() {
+            socket.emit("command", {command: $(this).attr("command")});
+          })
+
+          socket.on('message', function(msg){
+                var li=$('<li>');
+                li.html("<b>Send:</b><br>"+msg.send+"<br><br><b>receive:</b><br>"+msg.receive)
+                $('#messages').append(li);
+          });
+
+        })
+    </script>
+</head>
+
+<body>
+    <button class="test" command="PING">PING</button>
+    <ul id="messages"></ul>
+</body>
+
+</html>
